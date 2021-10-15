@@ -18,7 +18,7 @@ Game::Game()
     srand(static_cast<unsigned int>(time(0)));
 }
 
-void Game::Run()
+bool Game::Run()
 {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -49,7 +49,7 @@ void Game::Run()
     running = true;
     GrowBody(SIZE_AT_BEGINNING); // create a snake with a specific size
     ReplaceFood();
-    GameLoop();
+    return GameLoop();
 }
 
 void Game::ReplaceFood()
@@ -70,10 +70,11 @@ void Game::ReplaceFood()
     }
 }
 
-void Game::GameLoop()
+bool Game::GameLoop()
 {
     Uint32 before, second = SDL_GetTicks(), after;
     int frame_time, frames = 0;
+    bool nextgame = false;
 
     while (running)
     {
@@ -99,8 +100,9 @@ void Game::GameLoop()
         {
             SDL_Delay(FRAME_RATE - frame_time);
         }
+        nextgame = TryAgain();
     }
-
+    return nextgame;
 }
 
 void Game::PollEvents()
@@ -297,4 +299,30 @@ void Game::Close()
 {
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+bool Game::TryAgain()
+{
+    if (alive == false)
+    {
+        SDL_Event e;
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+            {
+                running = false;
+                return false;
+            }
+            else if (e.type == SDL_KEYDOWN)
+            {
+                switch (e.key.keysym.sym)
+                {
+                case SDLK_KP_ENTER:
+                    running = false;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }

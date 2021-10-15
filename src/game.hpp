@@ -8,9 +8,10 @@ class Game
     public:
 
         Game();
-        void Run();
+        bool Run();
         int GetScore();
         int GetSize();
+        void Close();
 
     private:
 
@@ -50,10 +51,10 @@ class Game
         void ReplaceFood();
         void GrowBody(int quantity);
         void UpdateWindowTitle();
-        void GameLoop();
+        bool GameLoop();
         void Render();
         void Update();
         void PollEvents();
-        void Close();
+        bool TryAgain();
 
 };
