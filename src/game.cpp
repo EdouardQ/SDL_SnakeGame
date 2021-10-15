@@ -31,7 +31,7 @@ void Game::Run()
     window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
-    if (window == NULL)
+    if (window == nullptr)
     {
         cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
         exit(EXIT_FAILURE);
@@ -39,7 +39,7 @@ void Game::Run()
 
     // Create renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == NULL)
+    if (renderer == nullptr)
     {
         cout << "Renderer could not be created! SDL_Error: " << SDL_GetError() << endl;
         exit(EXIT_FAILURE);

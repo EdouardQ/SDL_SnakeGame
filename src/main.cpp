@@ -3,11 +3,10 @@
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int main()
 {
     Game game = Game();
     game.Run();
-    cout << "Game has terminated successfully, score: " << game.GetScore()
-        << ", size: " << game.GetSize() << endl;
+    cout << "Game has terminated successfully, score: " << game.GetScore() << endl; //", size: " << game.GetSize() << endl;
     return 0;
 }
