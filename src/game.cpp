@@ -47,6 +47,7 @@ void Game::Run()
 
     alive = true;
     running = true;
+    GrowBody(SIZE_AT_BEGINNING); // create a snake with a specific size
     ReplaceFood();
     GameLoop();
 }
@@ -141,7 +142,7 @@ void Game::PollEvents()
 
 int Game::GetSize()
 {
-    return size;
+    return size + SIZE_AT_BEGINNING;
 }
 
 void Game::GrowBody(int quantity)
@@ -178,11 +179,20 @@ void Game::Update()
     }
 
     // Wrap
+    /*
     if (pos.x < 0) pos.x = GRID_WIDTH - 1;
     else if (pos.x > GRID_WIDTH - 1) pos.x = 0;
 
     if (pos.y < 0) pos.y = GRID_HEIGHT - 1;
     else if (pos.y > GRID_HEIGHT - 1) pos.y = 0;
+    */
+
+    // kill if the head touches the border of the
+    if (pos.x < 0) alive = false;
+    else if (pos.x > GRID_WIDTH - 1) alive = false;
+
+    if (pos.y < 0) alive = false;
+    else if (pos.y > GRID_HEIGHT - 1) alive = false;
 
     int new_x = static_cast<int>(pos.x);
     int new_y = static_cast<int>(pos.y);
@@ -243,7 +253,7 @@ int Game::GetScore()
 
 void Game::UpdateWindowTitle()
 {
-    string title = "Snakle++ Score: " + to_string(score) + " FPS: " + to_string(fps);
+    string title = "Snakle++ Score: " + to_string(score); // + " FPS: " + to_string(fps);
     SDL_SetWindowTitle(window, title.c_str());
 }
 
@@ -254,17 +264,17 @@ void Game::Render()
     block.h = SCREEN_WIDTH / GRID_HEIGHT;
 
     // Clear screen
-    SDL_SetRenderDrawColor(renderer, 0x15, 0x15, 0x15, 0x15);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
 
     // Render food
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xCC, 0x00, 0xFF);
+    SDL_SetRenderDrawColor(renderer, 239, 19, 19, 255);
     block.x = food.x * block.w;
     block.y = food.y * block.h;
     SDL_RenderFillRect(renderer, &block);
 
     // Render snake's body
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_SetRenderDrawColor(renderer, 32, 148, 0, 255);
     for (SDL_Point& point : body)
     {
         block.x = point.x * block.w;
@@ -275,8 +285,8 @@ void Game::Render()
     // Render snake's head
     block.x = head.x * block.w;
     block.y = head.y * block.h;
-    if (alive) SDL_SetRenderDrawColor(renderer, 0x00, 0x7A, 0xCC, 0xFF);
-    else       SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+    if (alive) SDL_SetRenderDrawColor(renderer, 160, 83, 30, 255);
+    else       SDL_SetRenderDrawColor(renderer, 93, 38, 130, 255);
     SDL_RenderFillRect(renderer, &block);
 
     // Update Screen

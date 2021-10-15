@@ -18,11 +18,12 @@ private:
     bool alive = false;
     int fps = 0;
 
-    static const int FRAME_RATE = 30; // 35 fps
-    static const int SCREEN_WIDTH = 640;
-    static const int SCREEN_HEIGHT = 640;
+    static const int FRAME_RATE = 50;
+    static const int SCREEN_WIDTH = 1000;
+    static const int SCREEN_HEIGHT = 1000;
     static const int GRID_WIDTH = 32;
     static const int GRID_HEIGHT = 32;
+    static const int SIZE_AT_BEGINNING = 2;
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
