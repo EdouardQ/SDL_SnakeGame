@@ -189,7 +189,7 @@ void Game::Update()
     else if (pos.y > GRID_HEIGHT - 1) pos.y = 0;
     */
 
-    // kill if the head touches the border of the
+    // kill if the head touches the border of the screen
     if (pos.x < 0) alive = false;
     else if (pos.x > GRID_WIDTH - 1) alive = false;
 
